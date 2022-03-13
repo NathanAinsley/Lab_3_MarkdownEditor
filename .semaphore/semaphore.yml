@@ -39,3 +39,12 @@ blocks:
           commands:
             - pip install flake8
             - 'flake8 martor_demo/ --max-line-length=127 '
+  - name: Docker
+    task:
+      jobs:
+        - name: Docker Hub
+          commands:
+            - checkout
+            - echo $DOCKERHUB_PASSWORD | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+            - 'docker run -d -p 1234:80 nginx:alpine'
+            - 'wget http://localhost:1234'
